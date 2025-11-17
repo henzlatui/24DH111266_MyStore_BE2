@@ -70,7 +70,6 @@ namespace _24DH111266_MyStore.Controllers
             // Lấy số trang hiện tại (mặc định là trang 1 nếu không có giá trị)
             int pageNumber = page ?? 1;
             int pageSize = model.PageSize; // Số sản phẩm mỗi trang
-
             model.product = pro;
             model.RelatedProducts = products.OrderBy(p => p.ProductID).Take(8).ToPagedList(pageNumber, pageSize);
             model.TopProducts = products.OrderByDescending(p => p.OrderDetails.Count()).Take(8).ToPagedList(pageNumber, pageSize);
