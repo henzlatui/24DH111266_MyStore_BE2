@@ -1,4 +1,9 @@
 ﻿﻿@model _24DH111266_MyStore.Models.ViewModel.ProductDetailsVM
+@{
+    ViewBag.Title = "ProductDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
 <head>
     <style>
         .pro {
@@ -39,7 +44,7 @@
         </div>
         @*Khối ở giữa*@
         <div class="col-md-5 pro-section">
-            @*Phần thông ttin sản phẩm*@
+            @*Phần thông tin sản phẩm*@
             <h4><strong>@Html.DisplayFor(model => model.product.ProductName)</strong></h4>
             <p class="pro-sale">đã bán:&nbsp; @Model.product.OrderDetails.Count</p>
             <p class="pro-price"> @Model.product.ProductPrice.ToString("C")</p>
@@ -58,22 +63,65 @@
                     <h4><strong>Số lượng</strong></h4>
                     <p>
                         @Html.TextBoxFor(model => model.quantity, new
-                        { @class = "form-control", @type = "number", @min = 1 })
-                    </p>
+                        { @class = "form-control", @type = "number", @min = 1, @id = "quantityInput" })
+                </p>
 
-                    <h4><strong>Tạm tính</strong></h4>
-                    <p>@Model.estematedValue.ToString("No")</p>
+                <h4><strong>Tạm tính</strong></h4>
+                <p id="estimatedValueDisplay">@Model.estimatedValue.ToString("N0")</p>
 
-                    <p>
-                        @Html.ActionLink("Thêm vào giỏ hàng", "AddToCart", "Cart",
-                            new { id = Model.product.ProductID, quantity = Model.quantity },
-                            new { @class = "btn btn-info" });
-                    </p>
-                }
+                <p>
+                    @Html.ActionLink("Thêm vào giỏ hàng", "AddToCart", "Cart",
+                                       new { id = Model.product.ProductID, quantity = Model.quantity },
+                                       new { @class = "btn btn-info" });
+                </p>
+
+            }
                 <hr />
             </div>
             <div>@Html.Partial("_PVTopProduct", Model)</div>
         </div>
     </div>
 </div>
+
+<input type="hidden" id="productPrice" value="@Model.product.ProductPrice" />
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            // Lấy giá trị ban đầu
+            var price = parseFloat($('#productPrice').val());
+
+            // Hàm tính toán và cập nhật giá trị
+            function updateEstimatedValue() {
+                // 1. Lấy số lượng từ ô input
+                var quantity = parseInt($('#quantityInput').val());
+
+                // Đảm bảo số lượng là hợp lệ (>= 1)
+                if (isNaN(quantity) || quantity < 1) {
+                    quantity = 1;
+                    $('#quantityInput').val(1);
+                }
+
+                // 2. Tính toán giá trị tạm tính
+                var estimatedValue = price * quantity;
+
+                // 3. Định dạng và cập nhật lên giao diện
+                // Sử dụng Number.toLocaleString() để định dạng số tiền
+                var formattedValue = estimatedValue.toLocaleString('vi-VN', {
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
+                });
+
+                $('#estimatedValueDisplay').text(formattedValue);
+            }
+
+            // Gán sự kiện cho ô input số lượng
+            // Sự kiện 'input' bắt tất cả các thay đổi (gõ, nút tăng/giảm)
+            $('#quantityInput').on('input', updateEstimatedValue);
+
+            // Chạy lần đầu để đảm bảo giá trị ban đầu chính xác
+            updateEstimatedValue();
+        });
+    </script>
+}
 

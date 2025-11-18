@@ -3,11 +3,11 @@ using _24DH111266_MyStore.Models.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using System.Web.UI.WebControls;
+using PagedList.Mvc;
+using PagedList;
 
 
 namespace _24DH111266_MyStore.Controllers
@@ -65,8 +65,27 @@ namespace _24DH111266_MyStore.Controllers
 
                 db.Customers.Add(customer);
 
-                // Lưu thông tin tài khoản và thông tin khách hàng vào CSDL
-                db.SaveChanges();
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (System.Data.Entity.Validation.DbEntityValidationException ex)
+                {
+                    // Lặp qua tất cả các lỗi validation
+                    var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.PropertyName + ": " + x.ErrorMessage);
+
+                    // Ghép các lỗi thành một chuỗi
+                    var fullErrorMessage = string.Join("; ", errorMessages);
+
+                    // Gán thông báo lỗi chi tiết vào ViewBag hoặc Log để hiển thị/kiểm tra
+                    ViewBag.ValidationErrors = fullErrorMessage; // hoặc Console.WriteLine(fullErrorMessage);
+
+                    // Bạn có thể giữ lại đoạn throw new System.Exception(fullErrorMessage, ex);
+                    // Hoặc xử lý lỗi thân thiện hơn tại đây (ví dụ: trả về View kèm thông báo lỗi)
+                    ModelState.AddModelError("", "Đăng ký thất bại. Vui lòng kiểm tra lại thông tin. Lỗi chi tiết: " + fullErrorMessage);
+                }
 
                 // Chuyển hướng về trang chủ sau khi đăng ký thành công
                 return RedirectToAction("Index", "Home");

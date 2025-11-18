@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using PagedList.Mvc;
+using PagedList;
 
 namespace _24DH111266_MyStore.Models.ViewModel
 {

@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using _24DH111266_MyStore.Models;
 using _24DH111266_MyStore.Models.ViewModel;
 using PagedList;
+using PagedList.Mvc;
 
 namespace _24DH111266_MyStore.Areas.Admin.Controllers
 {
@@ -21,7 +22,6 @@ namespace _24DH111266_MyStore.Areas.Admin.Controllers
         {
             var products = db.Products.AsQueryable();
             var model = new ProductSearchVM();
-
             if (!string.IsNullOrEmpty(searchTerm))
             {
                 model.SearchTerm = searchTerm;

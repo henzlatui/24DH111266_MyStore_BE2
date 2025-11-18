@@ -1,0 +1,36 @@
+﻿@model _24DH111266_MyStore.Models.ViewModel.HomeProductVM
+
+@using PagedList.Mvc
+
+@if (Model.NewProducts != null && Model.NewProducts.Any())
+{
+    <section class="container-fluid new-products">
+        <h2>Sản Phẩm Mới</h2>
+        <div class="row">
+            @foreach (var product in Model.NewProducts)
+            {
+                <div class="col-md-3 col-sm-6">
+                    <div class="product-item">
+                        <a href="@Url.Action("ProductDetails", "Home", new { id = product.ProductID })">
+                            <img src="@Url.Content(product.ProductImage)" alt="@product.ProductName" class="img-responsive" />
+                        </a>
+                        <h4>
+                            <a href="@Url.Action("ProductDetails", "Home", new { id = product.ProductID })">
+                                @product.ProductName
+                            </a>
+                        </h4>
+                        <p class="price">@product.ProductPrice.ToString("N0") VNĐ</p>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <hr />
+
+        @* Hiển thị các nút bấm phân trang (1, 2, 3...) *@
+        <div class="text-center">
+            @Html.PagedListPager(Model.NewProducts, page => Url.Action("Index", "Home",
+                     new { page = page, searchTerm = Model.SearchTerm }))
+        </div>
+    </section>
+}

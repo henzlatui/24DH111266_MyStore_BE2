@@ -6,13 +6,60 @@
 }
 
 <h2 class="bg-info">Xóa Sản Phẩm</h2>
-<h4 class="alert-danger">Bạn Chắc Chắn Xóa Sản Phẩm Này?</h4>
+<h4 style="color:orangered" class="bg-btn-outline-danger">Bạn có chắc chắn muốn xóa không?</h4>
+<div>
+    <h4>Sản phẩm</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Tên sản phẩm
+        </dt>
 
-@Html.Partial("PVProdInfo", Model)
+        <dd>
+            @Html.DisplayFor(model => model.ProductName)
+        </dd>
 
-<div class="form-group">
-    <div class="col-md-offset-3 col-md-9">
-        @Html.ActionLink("Xóa", "Delete", new { id = Model.ProductID }, new { @class = "btn btn-primary" }) |
-        @Html.ActionLink("Quay Lại Danh Sách", "Index", null, new { @class = "btn btn-primary" })
-    </div>
+        <dt>
+            Mô tả sản phẩm
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductDescription)
+        </dd>
+
+        <dt>
+            Đơn giá
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductPrice)
+        </dd>
+
+        <dt>
+            Hình ảnh
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductImage)
+        </dd>
+
+        <dt>
+            Danh mục sản phẩm
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category.CategoryName)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Xóa" class="btn btn-primary" /> |
+            @Html.ActionLink("Chở về danh sách", "Index", null, new { @class = "btn btn-primary" })
+        </div>
+    }
 </div>
