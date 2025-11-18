@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using PagedList.Mvc;
+using PagedList;
 
 namespace _24DH111266_MyStore.Models.ViewModel
 {
@@ -10,6 +12,16 @@ namespace _24DH111266_MyStore.Models.ViewModel
         private List<CartItem> items = new List<CartItem>();
 
         public IEnumerable<CartItem> Items => items;
+
+        //Danh sách các sản phẩm trong giỏ hàng đã được nhóm theo Category
+        public List<IGrouping<string, CartItem>> GroupedItems => items.GroupBy(i => i.Category).ToList();
+
+        //Các thuộc tính hỗ trợ phân trang
+        public int PageNumber { get; set; } //Trang hiện tại
+        public int PageSize { get; set; } = 6; //Số sản phẩm mỗi trang
+
+        //Danh sách các sản phẩm danh mục với các sản phẩm trong giỏ
+        public PagedList.IPagedList<Product> SimilarProducts { get; set; }
 
         //Thêm item vào giỏ
         public void AddItem(int productId, string productImage, string productName,

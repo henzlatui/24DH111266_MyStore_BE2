@@ -8,26 +8,25 @@ using System.Web;
 
 namespace _24DH111266_MyStore.Models
 {
-    [MetadataType(typeof(UserMetadata))]
-    public partial class User
-    {
-        [NotMapped]
-        [Compare("Password")]
-        public string ConfirmedPassword { get; set; }
-    }
-    [MetadataType(typeof(ProductMetadata))]
-    public partial class Product
+[MetadataType(typeof(UserMetadata))]
+        public partial class User
         {
-        [NotMapped]
-        public HttpPostedFileBase UploadImage { get; set; }
+            [NotMapped]
+            [Compare("Password")]
+            public string ConfirmedPassword { get; set; }
+        }
 
-        [NotMapped]
-        public List<ProductDetailsVM> RemainProducts { get; set; }
+        [MetadataType(typeof(ProductMetadata))]
+        public partial class Product
+        {
+            [NotMapped]
+            public HttpPostedFileBase UploadImage { get; set; }
 
-        [NotMapped]
-        public List<ProductDetailsVM> NeedImportProduct { get; set; }
-    }
-    public class PartialClasses
-    {
+            [NotMapped]
+            public List<ProductDetailsVM> RemainProducts { get; set; }
+        }
+	public class PartialClasses
+	{
+        
     }
 }

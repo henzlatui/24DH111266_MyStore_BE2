@@ -24,12 +24,16 @@
             @Html.DisplayFor(model => model.CategoryName)
         </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Xóa" class="btn btn-primary" /> |
-                @Html.ActionLink("Quay Lại Danh Sách", "Index", null, new { @class = "btn btn-primary" })
+        @using (Html.BeginForm()){
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Xóa" class="btn btn-primary" /> |
+                    @Html.ActionLink("Quay Lại Danh Sách", "Index", null, new { @class = "btn btn-primary" })
+                </div>
             </div>
-        </div>
+        }
+
     </div>
 </div>
 

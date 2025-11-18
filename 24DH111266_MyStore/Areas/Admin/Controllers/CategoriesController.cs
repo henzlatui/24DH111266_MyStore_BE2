@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using _24DH111266_MyStore.Models;
+using PagedList.Mvc;
+using PagedList;
 
 namespace _24DH111266_MyStore.Areas.Admin.Controllers
 {
@@ -14,13 +16,13 @@ namespace _24DH111266_MyStore.Areas.Admin.Controllers
     {
         private MyStoreEntities db = new MyStoreEntities();
 
-        // GET: Admin/Categories1
+        // GET: Admin/Categories
         public ActionResult Index()
         {
             return View(db.Categories.ToList());
         }
 
-        // GET: Admin/Categories1/Details/5
+        // GET: Admin/Categories/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -35,13 +37,13 @@ namespace _24DH111266_MyStore.Areas.Admin.Controllers
             return View(category);
         }
 
-        // GET: Admin/Categories1/Create
+        // GET: Admin/Categories/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Admin/Categories1/Create
+        // POST: Admin/Categories/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -58,7 +60,7 @@ namespace _24DH111266_MyStore.Areas.Admin.Controllers
             return View(category);
         }
 
-        // GET: Admin/Categories1/Edit/5
+        // GET: Admin/Categories/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -73,7 +75,7 @@ namespace _24DH111266_MyStore.Areas.Admin.Controllers
             return View(category);
         }
 
-        // POST: Admin/Categories1/Edit/5
+        // POST: Admin/Categories/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -89,7 +91,7 @@ namespace _24DH111266_MyStore.Areas.Admin.Controllers
             return View(category);
         }
 
-        // GET: Admin/Categories1/Delete/5
+        // GET: Admin/Categories/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -104,7 +106,7 @@ namespace _24DH111266_MyStore.Areas.Admin.Controllers
             return View(category);
         }
 
-        // POST: Admin/Categories1/Delete/5
+        // POST: Admin/Categories/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

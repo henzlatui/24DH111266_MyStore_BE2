@@ -10,18 +10,10 @@
 namespace _24DH111266_MyStore.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class OrderDetail
+    public partial class sp_helpdiagramdefinition_Result
     {
-        public int ID { get; set; }
-        public int ProductID { get; set; }
-        public int OrderID { get; set; }
-        public int Quantity { get; set; }
-        public decimal UnitPrice { get; set; }
-        public Nullable<decimal> TotalPrice { get; set; }
-    
-        public virtual Product Product { get; set; }
-        public virtual Order Order { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

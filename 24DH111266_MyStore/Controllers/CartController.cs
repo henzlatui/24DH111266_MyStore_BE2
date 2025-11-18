@@ -1,15 +1,16 @@
-﻿using _24DH111266_MyStore.Models;
-using _24DH111266_MyStore.Models.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using static System.Collections.Specialized.BitVector32;
+using _24DH111266_MyStore.Models;
+using _24DH111266_MyStore.Models.ViewModel;
+using PagedList;
+using PagedList.Mvc;
 
 namespace _24DH111266_MyStore.Controllers
 {
-    public class CartController
+    public class CartController: Controller
     {
         // GET: Cart
         private MyStoreEntities db = new MyStoreEntities();
@@ -27,6 +28,28 @@ namespace _24DH111266_MyStore.Controllers
             return View(cart);
         }
 
+        // Hiển thị giỏ hàng đã gom nhóm sản phẩm theo danh mục
+        public ActionResult Index2(int ? page)
+        {
+            var cart = GetCartService().GetCart();
+            var products = db.Products.ToList();
+            var similarProducts = new List<Product>();
+
+            if (cart.Items != null && cart.Items.Any())
+            {
+                similarProducts = products.Where(p => cart.Items.Any(ci => ci.Category == p.Category.CategoryName)
+                && !cart.Items.Any(ci => ci.ProductID == p.ProductID)).ToList();
+            }
+
+            // Đoạn code liên quan tới phân trang
+            // Lấy số trang hiện tại (mặc định là trang 1 nếu không có giá trị)
+            int pageNumber = page ?? 1;
+            int pageSize = cart.PageSize; // Số sản phẩm mỗi trang
+
+            cart.SimilarProducts = similarProducts.OrderBy(p => p.ProductID).ToPagedList(pageNumber, pageSize);
+            return View(cart);
+        }
+
         //Thêm sản phẩm vào giỏ
         public ActionResult AddToCart(int id, int quantity = 1)
         {
@@ -41,7 +64,7 @@ namespace _24DH111266_MyStore.Controllers
         }
 
         //Xóa sản phẩm khỏi giỏ
-        public ActionResult RemoveFromCart(int id)
+        public ActionResult RemoveFromCArt(int id)
         {
             var cartService = GetCartService();
             cartService.GetCart().RemoveItem(id);

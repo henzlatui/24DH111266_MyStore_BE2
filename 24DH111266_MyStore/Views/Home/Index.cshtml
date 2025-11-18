@@ -1,37 +1,41 @@
 ﻿﻿@model _24DH111266_MyStore.Models.ViewModel.HomeProductVM
 
+
+
 @{
-    ViewBag.Title = "Home Page";
-    <link rel="stylesheet" href="~/Content/SanPham.css" />
+    ViewBag.Title = "Customer Home Page";
+    <link rel="stylesheet" href="~/Content/SanPham1.css" />
 }
 
 @*Phần banner*@
 <section class="container-fluid banner">
     <div class="banner-contain">
-        <h2>Chào mừng đến với trang wed Truyện Tranh Nhà Nguyên</h2>
-        <p>Mua sắp trực tuyến với nhiều ưu đãi</p>
-        <a href="#" class="btnBanner">Bắt đầu mua sắm</a>
+        <h2>KHO TÀNG TRUYỆN TRANH</h2>
+        <p>Khám phá thế giới, chinh phục ước mơ!</p>
+        <a href="#" class="btnBanner">BẮT ĐẦU MUA SẮM</a>
     </div>
 </section>
 
+
+
 @*phần tìm kiếm sản phẩm*@
 <section class="container-fluid searchProd">
-    <h2>Tìm kiếm sản phẩm</h2>
+    <h2>Tìm Kiếm Sản Phẩm</h2>
     @using (Html.BeginForm("Index", "Home", FormMethod.Get))
     {
         <div class="form-group search-container">
             @Html.TextBoxFor(m => m.SearchTerm, new
             {
                 @class = "search-input",
-                placeholder = "Nhập tên, mô tả hoặc chủng loại sản phẩm"
+                placeholder = "Nhập tên, mô tả sản phẩm"
             })
-            <button type="submit" class="search-button">Tìm kiếm</button>
+            <button type="submit" class="search-button">TÌM KIẾM</button>
         </div>
     }
 </section>
 <hr />
 
-@*Sản phẩm nổi bật*@
+@*Sản Phẩm Nổi bật*@
 @Html.Partial("PVFeatureProduct", Model)
 
 @*Sản phẩm mới*@

@@ -1,13 +1,13 @@
-﻿using System;
+﻿using _24DH111266_MyStore.Models.ViewModel;
+using _24DH111266_MyStore.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web;
-using System.Web.UI;
 using System.Web.Mvc;
-using _24DH111266_MyStore.Models;
-using _24DH111266_MyStore.Models.ViewModel;
 using PagedList;
+using PagedList.Mvc;
 
 namespace _24DH111266_MyStore.Controllers
 {
@@ -33,7 +33,7 @@ namespace _24DH111266_MyStore.Controllers
             int pageSize = 6; //Số sản phẩm mỗi trang
 
             //Láy top 10 sản phẩm bán chạy nhất
-            model.FeaturedProducts = db.Products
+            model.FeaturedProducts = products
                                         .OrderByDescending(p => p.OrderDetails.Count())
                                         .Take(10)
                                         .ToList();
@@ -70,6 +70,7 @@ namespace _24DH111266_MyStore.Controllers
             // Lấy số trang hiện tại (mặc định là trang 1 nếu không có giá trị)
             int pageNumber = page ?? 1;
             int pageSize = model.PageSize; // Số sản phẩm mỗi trang
+
             model.product = pro;
             model.RelatedProducts = products.OrderBy(p => p.ProductID).Take(8).ToPagedList(pageNumber, pageSize);
             model.TopProducts = products.OrderByDescending(p => p.OrderDetails.Count()).Take(8).ToPagedList(pageNumber, pageSize);

@@ -6,16 +6,15 @@
             height: 150px;
             padding: 12px 5px;
             box-sizing: border-box;
-            border: 1px solid #878787;
-            border-radius: 10px;
+            border: 1px solid grey;
+            border-radius: 20px;
             background-color: whitesmoke;
             resize: none;
         }
     </style>
 </head>
-
 <div class="form-group">
-    <div class="control-label col-md-2">Danh Mục</div>
+    <div class="control-label col-md-2">Danh mục</div>
     @Html.LabelFor(model => model.CategoryID, "CategoryID", htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
         @Html.DropDownList("CategoryID", null, htmlAttributes: new { @class = "form-control" })
@@ -24,7 +23,7 @@
 </div>
 
 <div class="form-group">
-    <div class="control-label col-md-2">Tên Truyện</div>
+    @Html.LabelFor(model => model.ProductName, htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
         @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-danger" })
@@ -32,7 +31,7 @@
 </div>
 
 <div class="form-group">
-    <div class="control-label col-md-2">Mô Tả</div>
+    @Html.LabelFor(model => model.ProductDescription, htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
         @Html.TextAreaFor(model => model.ProductDescription, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(model => model.ProductDescription, "", new { @class = "text-danger" })
@@ -40,7 +39,7 @@
 </div>
 
 <div class="form-group">
-    <div class="control-label col-md-2">Đơn Giá</div>
+    @Html.LabelFor(model => model.ProductPrice, htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
         @Html.EditorFor(model => model.ProductPrice, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(model => model.ProductPrice, "", new { @class = "text-danger" })
@@ -48,16 +47,9 @@
 </div>
 
 <div class="form-group">
-    <div class="control-label col-md-2">Hình Ảnh</div>
+    @Html.LabelFor(model => model.ProductImage, htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
         @Html.EditorFor(model => model.ProductImage, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(model => model.ProductImage, "", new { @class = "text-danger" })
-    </div>
-</div>
-
-<div class="form-group">
-    <div class="col-md-offset-2 col-md-10">
-        <input type="submit" value="Lưu" class="btn btn-primary" />
-        @Html.ActionLink("Quay Lại Danh Sách", "Index", null, new { @class = "btn btn-primary" })
     </div>
 </div>

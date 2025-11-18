@@ -11,7 +11,7 @@ namespace _24DH111266_MyStore.Models
     public class CategoryMetadata
     {
         [HiddenInput]
-        public int CatID { get; set; }
+        public int CategoryID { get; set; }
 
         [Required]
         [StringLength(50, MinimumLength = 5)]
@@ -22,23 +22,14 @@ namespace _24DH111266_MyStore.Models
     {
         [Required(ErrorMessage = "Username is required")]
         [StringLength(30, MinimumLength = 5)]
-        [RegularExpression("\r\n^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){3,18}[a-zA-Z0-9]$\r\n")]
+        [RegularExpression(@"^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){3,18}[a-zA-Z0-9]$")]
         public string Username { get; set; }
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
         [Required]
+        [StringLength(20)]
         public string UserRole { get; set; }
-    }
-
-    public class CustomerMetadata
-    {
-
-    }
-
-    public class SupplierMetadata
-    {
-
     }
 
     //metadata của file product.cs
@@ -53,7 +44,7 @@ namespace _24DH111266_MyStore.Models
         public string ProductName { get; set; }
 
         [Display(Name = "Chủng Loại Sản Phẩm")]
-        public int CatID { get; set; }
+        public int CategoryID { get; set; }
         [Display(Name = "Đường Dẫn Ảnh Sản Phẩm")]
         [DefaultValue("~/Content/images/default_img.jfif")]
 
@@ -61,9 +52,6 @@ namespace _24DH111266_MyStore.Models
         public string ProductImage { get; set; }
 
         [Display(Name = "Mô Tả Sản Phẩm")]
-        public string NameDecription { get; set; }
-
-        [DefaultValue(true)]
-        public System.DateTime CreatedDate { get; set; }
+        public string ProductDescription { get; set; }
     }
 }

@@ -1,65 +1,66 @@
-﻿@model _24DH111266_MyStore.Models.ViewModel.ProductSearchVM
-@using PagedList.Mvc
-
-<head>
-    <style>
-        img {
-            height: 150px;
-            max-width: 150px;
-        }
-    </style>
-</head>
-
-<!--Hiển thị danh sách ản phẩm-->
+﻿@using PagedList.Mvc;
+@model _24DH111266_MyStore.Models.ViewModel.ProductSearchVM
+@{
+    ViewBag.Title = "Index";
+}
+<style>
+    .table img {
+        height: 80px;
+        width: auto;
+        max-width: 100px;
+        object-fit: contain;
+    }
+</style>
 @if (Model.Products != null && Model.Products.Any())
 {
-    <h2 class="bg-info">Danh Sách Sản Phẩm</h2>
-    <table class="table bg-info table-responsive">
-        <thead>
+    <h2 style="color:white;" class="bg-success">DANH SÁCH MỤC SẢN PHẨM</h2>
+    <table class="table bg-info col-md-10">
+        <tr>
+            <th class="bg-success col-md-1">
+                Tên sản phẩm
+            </th>
+            <th class="bg-success col-md-2">
+                Mô tả sản phẩm
+            </th>
+            <th class="bg-success col-md-1">
+                Đơn giá
+            </th>
+            <th class="bg-success col-md-3">
+                Hình ảnh
+            </th>
+            <th class="bg-success col-md-1">
+                Danh mục sản phẩm
+            </th>
+            <th class="bg-success col-md-3"></th>
+        </tr>
+
+        @foreach (var product in Model.Products)
+        {
             <tr>
-                <th class="bg-info col-md-2">Hình Ảnh</th>
-                <th class="bg-info col-md-3">Tên Sản Phẩm</th>
-                <th class="bg-info col-md-1">Đơn Giá</th>
-                <th class="bg-info col-md-2">Danh Mục</th>
-                <th class="bg-info col-md-4"></th>
+                <td>@Html.DisplayFor(modelItem => product.ProductName)</td>
+                <td>@Html.DisplayFor(modelItem => product.ProductDescription)</td>
+                <td>@Html.DisplayFor(modelItem => product.ProductPrice)</td>
+                <td><img src=" @Html.DisplayFor(modelItem => product.ProductImage)" /></td>
+                <td>@Html.DisplayFor(modelItem => product.Category.CategoryName)</td>
+                <td>
+                    @Html.ActionLink("Cập nhật", "Edit", new { id = product.ProductID }, new { @class = "btn btn-primary" }) |
+                    @Html.ActionLink("Xem chi tiết", "Details", new { id = product.ProductID }, new { @class = "btn btn-primary" }) |
+                    @Html.ActionLink("Xóa", "Delete", new { id = product.ProductID }, new { @class = "btn btn-primary" })
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var product in Model.Products)
-            {
-                <tr>
-                    <td><img src="@Html.DisplayFor(modelItem => product.ProductImage)" /></td>
-                    <td> @Html.DisplayFor(modelItem => product.ProductName)</td>
-                    <td>@Html.DisplayFor(modelItem => product.ProductPrice)</td>
-                    <td>@Html.DisplayFor(modelItem => product.Category.CategoryName)</td>
-                    <td>
-                        @Html.ActionLink("Cập Nhật", "Edit", new { id = product.ProductID }, new { @class = "btn btn-primary btn-sm" }) |
-                        @Html.ActionLink("Chi Tiết", "Details", new { id = product.ProductID }, new { @class = "btn btn-primary btn-sm" }) |
-                        @Html.ActionLink("Xóa", "Delete", new { id = product.ProductID }, new { @class = "btn btn-primary btn-sm" })
-                    </td>
-                </tr>
-            }
-        </tbody>
+        }
+
     </table>
 
-    <!--hiển thị phân trang-->
-<div class="pagination-container">
-    @Html.PagedListPager(Model.Products, page => Url.Action("Index", new
-    {
-        page,
-        sortOrder = Model.SortOrder,
-        searchTerm = Model.SearchTerm,
-        minPrice = Model.MinPrice,
-        maxPrice = Model.MaxPrice
-    }))
-</div>
+    //Hiển thị phân trang:
+    <div class="pagination-container">
+        @Html.PagedListPager(Model.Products, page => Url.Action("Index", new { page, searchTerm = Model.SearchTerm, minPrice = Model.MinPrice, maxPrice = Model.MaxPrice, sortOrder = Model.SortOrder }), new PagedListRenderOptions { UlElementClasses = new[] { "pagination" } })
+    </div>
 }
 else
 {
-    <p>Không tìm được sản phẩm nào phù hợp.</p>
+    < p > Không tìm được trang phù hợp </ p >
 }
-<div class="form-group">
-    <div class="col-md-offset-8 col-md-4">
-        @Html.ActionLink("Thêm Mới", "Create", null, new { @class = "btn btn-primary" })
-    </div>
-</div>
+<p>
+    @Html.ActionLink("Thêm mới", "Create", null, new { @class = "btn btn-primary" })
+</p>
